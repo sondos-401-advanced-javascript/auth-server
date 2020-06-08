@@ -50,6 +50,13 @@ describe('server', () => {
           });
       });
   });
+  it('/users ', () => {
+    return mockRequest
+      .get('/users')
+      .then(data => {
+        expect(data.status).toEqual(200);
+      });
+  });
 
 });
 
