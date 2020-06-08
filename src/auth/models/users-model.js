@@ -31,6 +31,7 @@ class UsersModel{
 
   generateToken(user){
     let token = jwt.sign({username: user.username},SECRET);
+    
     return token;
   }
   async save(newUser){
