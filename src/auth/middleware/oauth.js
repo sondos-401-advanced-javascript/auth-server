@@ -1,14 +1,15 @@
 'use strict';
 require('dotenv').config();
+
 const superagent = require('superagent');
 const userModel = require('../models/users-model');
 const userSchema = require('../models/users-schema');
-
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const tokenUrl = 'https://github.com/login/oauth/access_token';
 const apiUrl = 'https://api.github.com/user';
 const redirectUrl = 'http://localhost:3000/oauth';
+
 
 async function oauth(req,res,next){
   try{
@@ -26,10 +27,7 @@ async function oauth(req,res,next){
 }
 
 async function tokenFromGithub(code){
-  console.log(code,'our code =====?');
-  console.log(CLIENT_ID,'id code =====?');
-  console.log(CLIENT_SECRET,'secret code =====?');
-  console.log(redirectUrl,'url code =====?');
+
   let tokenGitHub = await superagent
     .post(tokenUrl)
     .send({
@@ -38,7 +36,7 @@ async function tokenFromGithub(code){
       code: code,
       redirect_uri: redirectUrl,
     });
-  console.log(tokenGitHub.body.access_token,'access token =====?');
+
 
   let acsses_token = tokenGitHub.body.access_token;
   return acsses_token;
@@ -70,3 +68,5 @@ async function checkUsername(addUser) {
 }
 
 module.exports = oauth;
+
+

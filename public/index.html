@@ -21,12 +21,14 @@
             redirect: 'http://localhost:3000/oauth',
             scope: 'read:user',
             state: 'oauthstate'
+
         }
 
         let completeQuery = Object.keys(options).map((key)=> {
             return `${key}=` + encodeURIComponent(options[key])
         }).join("&");
         let authURL = `${URL}?${completeQuery}`;
+
 
         let link = document.getElementById('outh');
         link.setAttribute('href', authURL);

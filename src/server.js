@@ -8,6 +8,7 @@ const morgan = require('morgan');
 
 const server = express();
 server.use(express.json());
+
 server.use(express.static('./public'));
 server.use(morgan('dev'));
 server.use(route);
