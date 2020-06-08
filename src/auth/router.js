@@ -4,17 +4,23 @@ const express = require('express');
 const route = express.Router();
 const userModel = require('../auth/models/users-model');
 const basicAuth = require('./middleware/basic');
+const OAuthMiddleware = require('./middleware/oauth');
 
 route.post('/signup',signUp);
 route.post('/signin',basicAuth,signIn);
 route.get('/users',allUsers);
+route.get('/oauth',OAuthMiddleware,signInGitHub);
 // for signUp
 function signUp(req,res,next){
   let newUser = req.body;
   userModel.save(newUser)
     .then(result =>{
       let token = userModel.generateToken(result);
-      res.status(200).json({signUp: `You are sign up and your token ${token}`});
+      res.cookie('token', token, {
+        expires  : new Date(Date.now() + 9999999),
+        httpOnly : false,
+      });
+      res.status(200).send({  token: token });
     })
     .catch(()=>{
       res.json({error: 'This userName is taken'});
@@ -24,8 +30,13 @@ function signUp(req,res,next){
 }
 // for sign In
 function signIn(req,res,next){
-  res.json({signIn: `you are sign In, token ${req.token}`});
+  res.cookie('token', req.token, {
+    expires  : new Date(Date.now() + 9999999),
+    httpOnly : false,
+  });
+  res.status(200).send({  token: req.token });
 }
+
 // get all users
 function allUsers(req,res,next){
   userModel.allUsers()
@@ -33,6 +44,14 @@ function allUsers(req,res,next){
       res.json(result);
 
     });
+}
+// for oauth route
+function signInGitHub(req,res){
+  res.cookie('token', req.token, {
+    expires  : new Date(Date.now() + 9999999),
+    httpOnly : false,
+  });
+  res.status(200).send({  token: req.token });
 }
 
 
