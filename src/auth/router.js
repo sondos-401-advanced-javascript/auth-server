@@ -9,7 +9,9 @@ const OAuthMiddleware = require('./middleware/oauth');
 route.post('/signup',signUp);
 route.post('/signin',basicAuth,signIn);
 route.get('/users',allUsers);
-route.get('/ouoth',OAuthMiddleware,signInGitHub);
+
+route.get('/oauth',OAuthMiddleware,signInGitHub);
+
 // for signUp
 function signUp(req,res,next){
   let newUser = req.body;

@@ -20,7 +20,8 @@
             client_id: 'f329267f74d5fd508d40',
             redirect: 'http://localhost:3000/oauth',
             scope: 'read:user',
-            state: 'anythingUwant'
+            state: 'oauthstate'
+
         }
 
         let completeQuery = Object.keys(options).map((key)=> {
@@ -28,7 +29,8 @@
         }).join("&");
         let authURL = `${URL}?${completeQuery}`;
 
-        let link = document.getElementById("oauth");
+
+        let link = document.getElementById('outh');
         link.setAttribute('href', authURL);
 
     </script>
