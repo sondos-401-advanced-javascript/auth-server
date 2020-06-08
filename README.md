@@ -5,7 +5,7 @@
 - [github action](https://github.com/sondos-401-advanced-javascript/auth-server/actions)
 
 ### test
-by using npm test and npm run lint
+by using `npm test` and `npm run lint`
 
 ### End Point
 - /signin 
