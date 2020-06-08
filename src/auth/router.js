@@ -7,6 +7,7 @@ const basicAuth = require('./middleware/basic');
 
 route.post('/signup',signUp);
 route.post('/signin',basicAuth,signIn);
+route.get('/users',allUsers);
 // for signUp
 function signUp(req,res,next){
   let newUser = req.body;
@@ -25,6 +26,15 @@ function signUp(req,res,next){
 function signIn(req,res,next){
   res.json({signIn: `you are sign In, token ${req.token}`});
 }
+// get all users
+function allUsers(req,res,next){
+  userModel.allUsers()
+    .then(result =>{
+      res.json(result);
+
+    });
+}
+
 
 
 

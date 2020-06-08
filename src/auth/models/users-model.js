@@ -41,6 +41,9 @@ class UsersModel{
     }
     return Promise.reject();
   }
+  allUsers(){
+    return users.find({});
+  }
 }
 
 module.exports = new UsersModel();
