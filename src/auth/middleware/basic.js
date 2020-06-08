@@ -12,7 +12,6 @@ function authSignIn(req,res,next){
   let [user,password] = base64.decode(base).split(':');
   userModel.authenticate(user,password)
     .then(result =>{
-      console.log('result ===>',result);
       req.token = userModel.generateToken(result[0]);
       next();
     })

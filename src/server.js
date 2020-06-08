@@ -15,6 +15,7 @@ server.use(errorHandler);
 
 
 module.exports = {
+  server: server,
   start: ()=>{
     const PORT = process.env.PORT || 3000;
     server.listen(PORT,()=>{
