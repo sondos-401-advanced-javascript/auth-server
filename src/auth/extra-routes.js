@@ -7,9 +7,8 @@ const bearerMiddleware = require('./middleware/bearer');
 
 route.get('/secret',bearerMiddleware,checkLoginUser);
 
-function checkLoginUser(req,res,next){
+function checkLoginUser(req,res){
   res.status(200).json({id:req.user._id,username:req.user.username});
-  next();
 }
 
 module.exports = route;

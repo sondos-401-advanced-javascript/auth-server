@@ -63,10 +63,8 @@ class UsersModel{
               return Promise.reject();
             }
           });
-        
       }
     });
-
   }
 }
 
