@@ -3,7 +3,7 @@ require('dotenv').config();
 const users = require('./users-schema');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const SECRET =  process.env.SECRET || 'MysecretKey';
+const SECRET =  process.env.SECRET;
 
 class UsersModel{
   async authenticate(username, password){
@@ -30,7 +30,9 @@ class UsersModel{
   }
 
   generateToken(user){
-    let token = jwt.sign({username: user.username},SECRET);
+    let token = jwt.sign({username: user.username},SECRET,{
+      expiresIn: '15m',
+    });
     
     return token;
   }
@@ -44,6 +46,27 @@ class UsersModel{
   }
   allUsers(){
     return users.find({});
+  }
+
+  verfiyToken(token){
+    return jwt.verify(token, SECRET, (err, verifiedJwt) => {
+      if(err){
+        return Promise.reject();
+      }else{
+        let username = verifiedJwt['username'];
+        return users.find({username})
+          .then(result =>{
+            if(result.length){
+              return Promise.resolve(result[0]);
+            }
+            else{
+              return Promise.reject();
+            }
+          });
+        
+      }
+    });
+
   }
 }
 
