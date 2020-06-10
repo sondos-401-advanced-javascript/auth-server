@@ -33,7 +33,7 @@ class UsersModel{
     let roles = {
       regular:['read'],
       admin: ['read','delete','update','create'],
-      editor:['read','delete','update'],
+      editor:['read','create','update'],
       writer: ['read','create'],
     };
     let token = jwt.sign({username: user.username, capability:roles[user.role]},SECRET,{
