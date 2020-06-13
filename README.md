@@ -19,4 +19,4 @@ by using `npm test` and `npm run lint`
 - /remove [admin]
 
 ### UML
-![UML](./assest/lab-11.jpg)
+![UML](./assest/lab-14.jpeg)
