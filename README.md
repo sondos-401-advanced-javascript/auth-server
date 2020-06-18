@@ -1,7 +1,7 @@
 # auth-server
 
 ## class 13
-- [pull request](https://github.com/sondos-401-advanced-javascript/auth-server/pull/4)
+- [pull request](https://github.com/sondos-401-advanced-javascript/auth-server/pull/5)
 - [github action](https://github.com/sondos-401-advanced-javascript/auth-server/actions)
 
 ### test
@@ -13,6 +13,10 @@ by using `npm test` and `npm run lint`
 - /users
 - /oauth
 - /secret
+- /read [admin, writer, regular, editor]
+- /add [admin, writer, editor]
+- /change [admin, editor]
+- /remove [admin]
 
 ### UML
-![UML](./assest/lab-11.jpg)
+![UML](./assest/lab-14.jpeg)

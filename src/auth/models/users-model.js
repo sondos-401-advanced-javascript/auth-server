@@ -30,19 +30,29 @@ class UsersModel{
   }
 
   generateToken(user){
-    let token = jwt.sign({username: user.username},SECRET,{
+    let roles = {
+      regular:['read'],
+      admin: ['read','delete','update','create'],
+      editor:['read','create','update'],
+      writer: ['read','create'],
+    };
+    let token = jwt.sign({username: user.username, capability:roles[user.role]},SECRET,{
       expiresIn: '15m',
     });
     
     return token;
   }
   async save(newUser){
-    if(!users[newUser.username]){
-      newUser.password = await bcrypt.hash(newUser.password,5);
-      let newUserSave = new users(newUser);
-      return newUserSave.save();
-    }
-    return Promise.reject();
+    return users.find({username: newUser.username})
+      .then(async result=>{
+        if(!result[0]){
+          newUser.password = await bcrypt.hash(newUser.password,5);
+          let newUserSave = new users(newUser);
+          return newUserSave.save();
+        }
+        return Promise.reject();
+      });
+    
   }
   allUsers(){
     return users.find({});
@@ -57,7 +67,7 @@ class UsersModel{
         return users.find({username})
           .then(result =>{
             if(result.length){
-              return Promise.resolve(result[0]);
+              return Promise.resolve(verifiedJwt);
             }
             else{
               return Promise.reject();
@@ -65,6 +75,14 @@ class UsersModel{
           });
       }
     });
+  }
+  can(permision){
+    if(permision){
+      return Promise.resolve(true);
+    }
+    else{
+      return Promise.resolve(false);
+    }
   }
 }
 
